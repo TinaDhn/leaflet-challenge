@@ -69,8 +69,8 @@ function createMap(earthquakes) {
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load.
   var myMap = L.map("map", {
-    center: [37.09, -60],
-    zoom: 1.5,
+    center: [37.09, -95.5],
+    zoom: 5,
     layers: [street, earthquakes]
   });
 
@@ -85,15 +85,17 @@ function createMap(earthquakes) {
   var legend = L.control({position: "bottomright"});
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend"),
-    depth = [-10, 10, 30, 50, 70, 90];
-    
-    div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
-    for (var i =0; i < depth.length; i++) {
-      div.innerHTML += 
-      '<i style="background:' + getColor(depth[i] + 1) + '"></i> ' +
-          depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
+        depth = [-10, 10, 30, 50, 70, 90],
+        labels = [];
+
+    // Loop through depth intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < depth.length; i++) {
+      div.innerHTML +=
+        '<i style="background:' + getColor(depth[i] + 1) + '"></i> ' +
+        depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
     }
     return div;
   };
+
   legend.addTo(myMap);
 }
