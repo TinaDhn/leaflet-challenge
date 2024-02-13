@@ -11,17 +11,17 @@ function createFeatures(earthquakeData) {
   // Define the getColor function to assign color based on depth.
   function getColor(depth) {
     if (depth < 10) {
-      return "#ffffcc";
+      return "#66ff33";
     } else if (depth < 30) {
-      return "#a1dab4";
+      return "#cccc00";
     } else if (depth < 50) {
       return "#41b6c4";
     } else if (depth < 70) {
-      return "#2c7fb8";
+      return "#e6b800";
     } else if (depth < 90) {
-      return "#253494";
+      return "#ff9900";
     } else {
-      return "#081d58";
+      return "#cc3300";
     }
   }
 
@@ -68,28 +68,27 @@ function createMap(earthquakes) {
   };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load.
-  var myMap = L.map("map", {
+  let myMap = L.map("map", {
     center: [37.09, -95.5],
     zoom: 5,
     layers: [street, earthquakes]
   });
 
   // Create a layer control.
-  // Pass it our baseMaps and overlayMaps.
   // Add the layer control to the map.
   L.control.layers(baseMaps, overlayMaps,{
     collapsed: false
   }).addTo(myMap);
 
   // Add legend
-  var legend = L.control({position: "bottomright"});
+  let legend = L.control({position: "bottomright"});
   legend.onAdd = function() {
-    var div = L.DomUtil.create("div", "info legend"),
+    let div = L.DomUtil.create("div", "info legend"),
         depth = [-10, 10, 30, 50, 70, 90],
         labels = [];
 
     // Loop through depth intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < depth.length; i++) {
+    for (let i = 0; i < depth.length; i++) {
       div.innerHTML +=
         '<i style="background:' + getColor(depth[i] + 1) + '"></i> ' +
         depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
